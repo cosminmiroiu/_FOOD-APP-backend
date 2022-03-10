@@ -43,7 +43,6 @@ public class JwtService implements UserDetailsService {
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
         User user = userRepository.findByEmail(email).get();
-        user.setOrders(null);
 
         return new JwtResponse(
                 user,
@@ -60,7 +59,6 @@ public class JwtService implements UserDetailsService {
 
         if (checkedUser.isPresent()) {
             user = checkedUser.get();
-            user.setOrders(null);
             return new org.springframework.security.core.userdetails.User(
                     user.getEmail(),
                     user.getPassword(),
