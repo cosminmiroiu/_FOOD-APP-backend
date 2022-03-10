@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Component
 public class JwtUtil {
@@ -17,16 +16,11 @@ public class JwtUtil {
     private static final int TOKEN_VALIDITY = 1000 * 60 * 300; // 5 hours
 
     public String getEmailFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 
-    private <T> T getClaimFromToken(String token, Function<Claims, T> claimResolver) {
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimResolver.apply(claims);
-    }
-
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    public Date getExpirationDateFromToken(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
@@ -37,10 +31,6 @@ public class JwtUtil {
     private boolean isTokenExpired(String token) {
         final Date expirationDate = getExpirationDateFromToken(token);
         return expirationDate.before(new Date());
-    }
-
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
     }
 
     public String generateToken(UserDetails userDetails) {
