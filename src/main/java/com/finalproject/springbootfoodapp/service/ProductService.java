@@ -19,12 +19,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void addProduct(Product product) {
-        if (productRepository.findByName(product.getName()).isEmpty()) {
-            this.productRepository.save(product);
-        }
-    }
-
     public List<Product> getProductsByRestaurantId(Long id) {
         return productRepository.findAllByRestaurantId(id);
     }

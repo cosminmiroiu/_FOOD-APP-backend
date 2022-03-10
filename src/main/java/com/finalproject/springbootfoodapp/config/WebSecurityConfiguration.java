@@ -44,7 +44,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/login",
                                                             "/register",
                                                             "/restaurants",
-                                                            "/categories/**",
+                                                            "/categories/all",
                                                             "/products/**").permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
