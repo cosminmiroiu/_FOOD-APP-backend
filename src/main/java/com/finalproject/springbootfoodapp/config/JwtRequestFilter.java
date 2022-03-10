@@ -34,7 +34,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         final String header = request.getHeader("Authorization");
-
         String jwtToken = null;
         String email = null;
 
@@ -48,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 throw new UserLoginException("JWT Token is not valid.");
             }
         } else {
-            System.out.println("Info: Authentication header not found. => User is not logged in.");
+            System.out.println("Info: Authentication header not found => User is not logged in.");
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
