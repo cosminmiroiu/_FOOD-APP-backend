@@ -14,7 +14,7 @@ public class UserLoginExceptionHandler {
     public ResponseEntity<Object> handleUserRegisterException(UserLoginException e) {
 
         // 1. Create payload containing exception details
-        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        final HttpStatus badRequest = HttpStatus.SEE_OTHER;
         LoginException loginException = new LoginException(e.getMessage(), badRequest);
 
         // 2. Return response entity
