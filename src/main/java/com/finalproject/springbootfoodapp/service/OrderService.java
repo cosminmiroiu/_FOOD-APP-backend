@@ -187,16 +187,10 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
     }
 
     /** for courier-user: count all orders accepted by courier today */
@@ -205,18 +199,11 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByAssignedToIdAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByAssignedToIdAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 courierId,
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
-
     }
 
     /** for courier-user / restaurant admin user / super admin user:
@@ -226,19 +213,12 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByAssignedToIdAndStatusIsAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByAssignedToIdAndStatusIsAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 courierId,
                 OrderStatus.DELIVERED.getInfo(),
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
-
     }
 
     /** for courier-user / restaurant admin user / super admin user:
@@ -249,19 +229,12 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByAssignedToIdAndStatusIsAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByAssignedToIdAndStatusIsAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 courierId,
                 OrderStatus.REJECTED.getInfo(),
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
-
     }
 
     /** for courier-user: auto accept order if checkbox is checked on client UI */
@@ -318,17 +291,11 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByRestaurantIdAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByRestaurantIdAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 restaurantId,
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
     }
 
     /** for restaurant admin-user: count today accepted orders by couriers for restaurant */
@@ -337,34 +304,19 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByRestaurantIdAndAssignedToIdNotNullAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
+        return orderRepository.countByRestaurantIdAndAssignedToIdNotNullAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(
                 restaurantId,
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
-
     }
 
     /** for restaurant admin-user: count active orders which are picked up by couriers right now by restaurant */
     public Long countNowDeliveringOrdersByRestaurant(Long restaurantId) {
 
-        Long numberOfOrders = orderRepository.countByActiveTrueAndRestaurantIdAndStatusIs(
+        return orderRepository.countByActiveTrueAndRestaurantIdAndStatusIs(
                 restaurantId,
-                OrderStatus.PICKED_UP.getInfo()
-        );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
-
+                OrderStatus.PICKED_UP.getInfo());
     }
 
     /** for restaurant admin-user: count today orders by restaurant by order status */
@@ -373,18 +325,12 @@ public class OrderService {
         Date startOfDay = dateUtil.getDayStart(new Date());
         Date endOfDay = dateUtil.getDayEnd(new Date());
 
-        Long numberOfOrders = orderRepository.countByRestaurantIdAndActiveFalseAndStatusIsAndDateCreatedGreaterThanAndDateCreatedLessThanEqual(
+        return orderRepository.countByRestaurantIdAndActiveFalseAndStatusIsAndDateCreatedGreaterThanAndDateCreatedLessThanEqual(
                 restaurantId,
                 status.getInfo(),
                 startOfDay,
                 endOfDay
         );
-
-        if (numberOfOrders != null) {
-            return numberOfOrders;
-        }
-
-        return 0L;
     }
 
     private String generateOrderUUID() {

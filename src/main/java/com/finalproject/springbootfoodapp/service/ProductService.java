@@ -38,6 +38,8 @@ public class ProductService {
         return discountedProducts.stream().limit(5).collect(Collectors.toList());
     }
 
-    public Long countProductsByRestaurantId(Long id) { return productRepository.countByRestaurantId(id); }
+    public Long countProductsByRestaurantId(Long id) {
+        return productRepository.countByRestaurantId(id);
+    }
 
 }
