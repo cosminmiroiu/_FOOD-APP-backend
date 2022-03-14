@@ -1,5 +1,6 @@
 package com.finalproject.springbootfoodapp.util;
 
+import com.finalproject.springbootfoodapp.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,10 +31,10 @@ public class JwtUtil {
         return expirationDate.before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String userEmail) {
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(userEmail)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)

@@ -52,7 +52,7 @@ public class UserService {
         if (userToLogin.isPresent()) {
             if (isPasswordMatch(jwtRequest.getPassword(), userToLogin.get().getPassword())) {
                 if (userToLogin.get().isActive()) {
-                    return jwtService.createJwtToken(jwtRequest);
+                    return jwtService.createJwtToken(jwtRequest, userToLogin.get());
                 } else {
                     throw new UserLoginException("Account not active. Please contact administrator.");
                 }

@@ -30,22 +30,19 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
+    public JwtResponse createJwtToken(JwtRequest jwtRequest, User user) throws Exception {
         String email = jwtRequest.getEmail();
         String password = jwtRequest.getPassword();
         authenticate(email, password);
 
-        final UserDetails userDetails = loadUserByUsername(email);
-
-        String newGeneratedToken = jwtUtil.generateToken(userDetails);
-
-        User user = userRepository.findByEmail(email).get();
+        String newGeneratedToken = jwtUtil.generateToken(user.getEmail());
 
         return new JwtResponse(
                 user,
                 newGeneratedToken,
                 new Date(jwtUtil.getExpirationDateFromToken(newGeneratedToken).getTime())
         );
+
     }
 
     @Override
