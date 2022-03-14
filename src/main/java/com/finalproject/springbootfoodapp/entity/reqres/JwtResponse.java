@@ -1,9 +1,13 @@
 package com.finalproject.springbootfoodapp.entity.reqres;
 
 import com.finalproject.springbootfoodapp.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class JwtResponse {
 
     private User user;
@@ -17,30 +21,4 @@ public class JwtResponse {
         this.expirationDate = expirationDate;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public JwtResponse setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-        return this;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public JwtResponse setUser(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public String getJwtToken() {
-        return jwtToken;
-    }
-
-    public JwtResponse setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
-        return this;
-    }
 }
