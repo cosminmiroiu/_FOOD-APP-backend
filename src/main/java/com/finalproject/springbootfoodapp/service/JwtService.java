@@ -46,17 +46,17 @@ public class JwtService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(
                     user.getEmail(),
                     user.getPassword(),
-                    getAuthorities(user));
+                    getAuthorities(user.getRole().getRoleName()));
         } else {
             throw new UsernameNotFoundException("User with email: " + email + " doesn't exists.");
         }
     }
 
-    private List<SimpleGrantedAuthority> getAuthorities(User user) {
+    private List<SimpleGrantedAuthority> getAuthorities(String roleName) {
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
 
         return authorities;
     }
