@@ -8,6 +8,8 @@ import com.finalproject.springbootfoodapp.exception.UserRegisterException;
 import com.finalproject.springbootfoodapp.repository.RoleRepository;
 import com.finalproject.springbootfoodapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,9 @@ public class UserService {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     /** user registration */
     public String register(User user) {
 
@@ -47,12 +52,15 @@ public class UserService {
     /** user login */
     public JwtResponse login(JwtRequest jwtRequest) throws Exception {
 
-        Optional<User> userToLogin = userRepository.findByEmail(jwtRequest.getEmail());
+        Optional<User> checkedUser = userRepository.findByEmail(jwtRequest.getEmail());
+        User user;
 
-        if (userToLogin.isPresent()) {
-            if (isPasswordMatch(jwtRequest.getPassword(), userToLogin.get().getPassword())) {
-                if (userToLogin.get().isActive()) {
-                    return jwtService.createJwtToken(jwtRequest, userToLogin.get());
+        if (checkedUser.isPresent()) {
+            user = checkedUser.get();
+            if (isPasswordMatch(jwtRequest.getPassword(), user.getPassword())) {
+                if (user.isActive()) {
+                    authenticateWithSecurity(jwtRequest.getEmail(), jwtRequest.getPassword());
+                    return jwtService.createJwtToken(user);
                 } else {
                     throw new UserLoginException("Account not active. Please contact administrator.");
                 }
@@ -70,5 +78,9 @@ public class UserService {
 
     private boolean isPasswordMatch(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    private void authenticateWithSecurity(String email, String password) throws Exception {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
     }
 }

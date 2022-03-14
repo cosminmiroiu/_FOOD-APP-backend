@@ -1,13 +1,10 @@
 package com.finalproject.springbootfoodapp.service;
 
-import com.finalproject.springbootfoodapp.entity.reqres.JwtRequest;
 import com.finalproject.springbootfoodapp.entity.reqres.JwtResponse;
 import com.finalproject.springbootfoodapp.entity.User;
 import com.finalproject.springbootfoodapp.repository.UserRepository;
 import com.finalproject.springbootfoodapp.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,13 +24,7 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    public JwtResponse createJwtToken(JwtRequest jwtRequest, User user) throws Exception {
-        String email = jwtRequest.getEmail();
-        String password = jwtRequest.getPassword();
-        authenticate(email, password);
+    public JwtResponse createJwtToken(User user) throws Exception {
 
         String newGeneratedToken = jwtUtil.generateToken(user.getEmail());
 
@@ -71,8 +62,6 @@ public class JwtService implements UserDetailsService {
         return authorities;
     }
 
-    private void authenticate(String email, String password) throws Exception {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-    }
+
 
 }
