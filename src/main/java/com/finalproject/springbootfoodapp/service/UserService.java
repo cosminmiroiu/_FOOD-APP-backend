@@ -80,7 +80,7 @@ public class UserService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
-    private void authenticateWithSecurity(String email, String password) throws Exception {
+    private void authenticateWithSecurity(String email, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
     }
 }

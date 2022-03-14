@@ -24,7 +24,7 @@ public class JwtService implements UserDetailsService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public JwtResponse createJwtToken(User user) throws Exception {
+    public JwtResponse createJwtToken(User user) {
 
         String newGeneratedToken = jwtUtil.generateToken(user.getEmail());
 
@@ -33,7 +33,6 @@ public class JwtService implements UserDetailsService {
                 newGeneratedToken,
                 new Date(jwtUtil.getExpirationDateFromToken(newGeneratedToken).getTime())
         );
-
     }
 
     @Override
@@ -61,7 +60,5 @@ public class JwtService implements UserDetailsService {
 
         return authorities;
     }
-
-
 
 }
