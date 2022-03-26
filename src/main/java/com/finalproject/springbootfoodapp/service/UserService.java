@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,7 +61,7 @@ public class UserService {
             user = checkedUser.get();
             if (isPasswordMatch(jwtRequest.getPassword(), user.getPassword())) {
                 if (user.isActive()) {
-                    authenticateWithSecurity(jwtRequest.getEmail(), jwtRequest.getPassword());
+//                    authenticateWithSecurity(jwtRequest.getEmail(), jwtRequest.getPassword());
                     return jwtService.createJwtToken(user);
                 } else {
                     throw new UserLoginException("Account not active. Please contact administrator.");

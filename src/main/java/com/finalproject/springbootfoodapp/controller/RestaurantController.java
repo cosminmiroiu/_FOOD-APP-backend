@@ -4,6 +4,7 @@ import com.finalproject.springbootfoodapp.entity.Product;
 import com.finalproject.springbootfoodapp.entity.Restaurant;
 import com.finalproject.springbootfoodapp.service.RestaurantService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,11 +16,8 @@ import java.util.List;
 @RequestMapping("/restaurants")
 public class RestaurantController {
 
-    private final RestaurantService restaurantService;
-
-    public RestaurantController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
-    }
+    @Autowired
+    private RestaurantService restaurantService;
 
     @GetMapping("")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {

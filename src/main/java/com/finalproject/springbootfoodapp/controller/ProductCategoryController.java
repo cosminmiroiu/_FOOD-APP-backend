@@ -2,6 +2,7 @@ package com.finalproject.springbootfoodapp.controller;
 
 import com.finalproject.springbootfoodapp.entity.ProductCategory;
 import com.finalproject.springbootfoodapp.service.ProductCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +15,8 @@ import java.util.List;
 @RequestMapping("/categories")
 public class ProductCategoryController {
 
-    private final ProductCategoryService productCategoryService;
-
-    public ProductCategoryController(ProductCategoryService productCategoryService) {
-        this.productCategoryService = productCategoryService;
-    }
+    @Autowired
+    private ProductCategoryService productCategoryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<ProductCategory>> getAllCategories() {
