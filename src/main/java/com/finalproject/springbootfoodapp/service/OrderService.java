@@ -221,9 +221,8 @@ public class OrderService {
         );
     }
 
-    /** for courier-user / restaurant admin user / super admin user:
-        - count today rejected orders - for courier by providing courier id
-        - count all today rejected orders by providing null courier id */
+    /** for courier-user:
+        - count today rejected orders - for courier by providing courier id */
     public Long countTodayRejectedOrdersByCourierId(Long courierId) {
 
         Date startOfDay = dateUtil.getDayStart(new Date());
