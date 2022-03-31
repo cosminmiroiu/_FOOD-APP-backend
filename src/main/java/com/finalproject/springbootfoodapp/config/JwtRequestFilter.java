@@ -51,7 +51,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             System.out.println("Info: Authentication header not found => User is not logged in.");
         }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (email != null && email.length() > 0) {
 
             UserDetails userDetails = jwtService.loadUserByUsername(email);
 
