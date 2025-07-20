@@ -13,7 +13,7 @@ Built with **Spring Boot**, **Spring Data JPA**, and **MySQL**, exposing secure 
 
 ## Tech Stack
 - Java 17
-- Spring Boot 2.x (check `pom.xml` for exact version)
+- Spring Boot 2.6.3
 - Spring Data JPA (Hibernate)
 - MySQL 8+
 - JWT (JJWT library)
